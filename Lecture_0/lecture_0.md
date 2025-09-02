@@ -1,4 +1,4 @@
-# 컴퓨터 과학(Computer Science)
+# Computer Science
 
 ## 키워드
 
@@ -19,7 +19,7 @@
 - pseudocode
 - Artificial Intelligence
 
-## 내용
+## 정리
 
 💡 비트와 패턴 
 
@@ -80,7 +80,7 @@ PC, 스마트폰 등 기기들은 내부적으로 트랜지스터라고 불리�
 
 그리고 결국 찾아내거나 John Harvard의 전화번호가 없을 수도 있다.
 
-![alt text](<스크린샷 2025-09-02 오후 1.08.29.png>)
+<img src="./graph.png" alt="graph">
 
 💡 pseudocode
 
