@@ -1,5 +1,28 @@
 # C
 
+## **키워드**
+
+- source code
+- machine code
+- compiler
+- GUI (Graphic User Interface)
+- CLI (Command-line Interface)
+- code, make, ./{machine_code_name}
+- 터미널 명령어
+- printf
+- escape sequence (\n, \t, ...)
+- library
+- types
+- format code
+- conditions
+- operators
+- variables
+- loops
+- functions
+- constants
+- truncation
+- floating-point imprecision
+
 ---
 
 ## 1. **소스 코드와 머신 코드**
