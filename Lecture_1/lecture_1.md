@@ -1,10 +1,12 @@
 # C
 
+---
+
 ## 1. **소스 코드와 머신 코드**
 - **소스 코드 (Source Code)**: 프로그래밍 언어(C 등)로 작성된 코드.
-- **머신 코드 (Machine Code)**: 컴퓨터가 이해할 수 있는 0과 1로 이루어진 이진 코드.
+- **머신 코드 (Machine Code)**: 컴퓨터가 이해하는 0과 1로 이루어진 이진 코드.
 - **컴파일러 (Compiler)**: 소스 코드를 머신 코드로 번역.
-  - 예: `make hello`는 소스 코드를 컴파일하여 머신 코드 생성.
+  - 예: `make hello`는 소스 코드를 컴파일.
   - 실행: `./hello`로 컴파일된 프로그램 실행.
 
 ---
@@ -45,7 +47,7 @@
 ---
 
 ## 4. **printf() 함수와 이스케이프 시퀀스**
-- **printf()**: 문자열을 출력하는 함수. 문자열은 큰따옴표(`""`)로 감싸야 함.
+- **printf()**: 문자열 출력 함수. 문자열은 큰따옴표(`""`)로 감싸야 함.
   - 예: `printf("hello, world!\n");`
   - `\n` 없이 출력 시 커서가 다음 줄로 이동하지 않음 (예: `hello, world$`) → 사소한 버그.
 - **이스케이프 시퀀스 (Escape Sequence)**:
@@ -67,13 +69,13 @@
 ## 5. **헤더 파일과 라이브러리**
 - **헤더 파일**: `.h`로 끝나는 파일 (예: `stdio.h`).
   - `#include <stdio.h>`: 표준 입출력 라이브러리 포함.
-  - 포함하지 않으면 `printf` 같은 함수 사용 시 에러:
+  - 포함하지 않으면 `printf` 사용 시 에러:
     ```text
     cc     hello.c   -o hello
     hello.c:3:5: error: call to undeclared library function 'printf'...
     note: include the header <stdio.h> or explicitly provide a declaration for 'printf'
     ```
-  - 에러 해석: `hello.c:3:5`는 `hello.c` 파일의 3번째 줄, 5번째 문자에서 문제 발생.
+  - 에러 해석: `hello.c:3:5`는 3번째 줄, 5번째 문자에서 문제 발생.
 - **라이브러리 (Library)**: 다른 개발자가 작성한 코드 모음.
   - `stdio.h`: 표준 I/O 함수(`printf`, `scanf` 등) 제공.
 
@@ -155,15 +157,29 @@
       printf("x is equal to y\n");
   }
   ```
-  - **효율성**: `else if`를 사용하면 조건이 참일 때 나머지 조건 검사 생략.
-  - 단일 `if`만 사용 시 모든 조건 순차 검사 → 비효율적.
+  - **효율성**: `else if`는 조건이 참일 때 나머지 조건 검사 생략. 단일 `if`만 사용 시 모든 조건 순차 검사 → 비효율적.
+  - 예: 단일 `if` 사용:
+    ```c
+    if (x < y) {
+        printf("x is less than y\n");
+    }
+    if (x > y) {
+        printf("x is greater than y\n");
+    }
+    if (x == y) {
+        printf("x is equal to y\n");
+    }
+    ```
 - **논리 연산자**:
   - `||` (OR): 하나라도 참이면 참.
   - `&&` (AND): 모두 참이어야 참.
-  - 예:
+  - 예: 동의 여부 확인:
     ```c
+    char c = get_char("Do you agree? ");
     if (c == 'y' || c == 'Y') {
         printf("Agreed.\n");
+    } else if (c == 'n' || c == 'N') {
+        printf("Not agreed.\n");
     }
     ```
 
@@ -201,11 +217,11 @@
 
 ---
 
-## 12. **함수**
+## 12. **함수와 프로토타입**
 - **함수 선언 및 호출**:
   ```c
   #include <stdio.h>
-  void meow(void);
+  void meow(void); // 함수 프로토타입
   int main(void) {
       for (int i = 0; i < 3; i++) {
           meow();
@@ -215,25 +231,43 @@
       printf("meow\n");
   }
   ```
+  - **프로토타입 (Function Prototype)**: 함수 정의 전에 함수의 존재를 컴파일러에 알리는 선언 (예: `void meow(void);`).
+    - 헤더 파일 아래 또는 코드 상단에 작성.
+    - 함수의 반환 타입, 이름, 매개변수 타입을 지정.
+    - 컴파일러가 함수 호출을 이해하도록 도움.
 - **매개변수**:
   ```c
+  void meow(int n); // 프로토타입
+  int main(void) {
+      meow(3);
+  }
   void meow(int n) {
       for (int i = 0; i < n; i++) {
           printf("meow\n");
       }
   }
-  int main(void) {
-      meow(3);
-  }
   ```
 - **반환값**:
   ```c
+  #include <cs50.h>
+  #include <stdio.h>
+  int get_positive_int(void); // 프로토타입
+  void meow(int times); // 프로토타입
+  int main(void) {
+      int times = get_positive_int();
+      meow(times);
+  }
   int get_positive_int(void) {
       int n;
       do {
           n = get_int("Number: ");
       } while (n < 1);
       return n;
+  }
+  void meow(int times) {
+      for (int i = 0; i < times; i++) { // 문서의 오류(n → times) 수정
+          printf("meow\n");
+      }
   }
   ```
 
@@ -325,15 +359,14 @@
   ```
 - **소수점 자릿수 지정**:
   ```c
-  printf("%.5f\n", (float) x / y); // 소수점 5자리 출력
-  printf("%.50f\n", (float) x / y); // 소수점 50자리 출력
+  printf("%.5f\n", (float) x / y); // 소수점 5자리
+  printf("%.50f\n", (float) x / y); // 소수점 50자리
   ```
 
 ---
 
 ## 17. **부동소수점 정밀도 문제 (Floating-point Imprecision)**
-- 부동소수점 숫자는 컴퓨터의 한계로 인해 정확하지 않을 수 있음.
-- 이유: 컴퓨터는 유한한 비트로 부동소수점을 표현 → 근사값 저장.
+- 부동소수점 숫자는 컴퓨터의 유한한 비트로 인해 정확하지 않을 수 있음.
 - 예: `0.1 + 0.2`는 정확히 `0.3`이 아닌 근사값 출력 가능.
 
 ---
